@@ -1,7 +1,15 @@
-// variables
+// VARIABLES
 
-// functions
+// FUNCTIONS
+// country api call
+// populate dropdown with country api info
 
-// events
-// todo: country select from dropdown
-// nice to have: user can select a second currency to compare to first selection
+// handle dropdown choice
+// call flag api
+// call currency api
+
+// display flag and currency api info
+
+// EVENTS
+// ping country API to populate dropdown
+// country select from dropdown
