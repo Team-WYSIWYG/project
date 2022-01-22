@@ -1,5 +1,5 @@
 // VARIABLES
-let isoCode = "";
+let selectForm = document.querySelector("#countryForm");
 let selectBar = document.querySelector("#country-select");
 
 // FUNCTIONS
@@ -23,8 +23,8 @@ function fetchCountries() {
             result.forEach((country) => {
                 let countryRow = document.createElement("option");
                 // give attributes for countries
-                countryRow.setAttribute("iso2", country.iso2);
-                countryRow.setAttribute("countryName", country.name);
+                countryRow.setAttribute("data-iso2", country.iso2);
+                countryRow.setAttribute("data-countryName", country.name);
                 // add text country name
                 countryRow.innerHTML = country.name;
                 // append
@@ -33,20 +33,43 @@ function fetchCountries() {
         })
         .catch((error) => console.log("error", error));
 }
-// populate dropdown with country api info
+
+// populate dropdown with country specific api info
+function fetchChosenCountryData() {
+    let validate = new Headers();
+    validate.append("X-CSCAPI-KEY", "UFVhZmZRcFNQM3luREtqTUhOS0lCMXVNOUQ2UHZ2R01VakNqZ3RtcA==");
+
+    let requestOptions = {
+        method: "GET",
+        headers: validate,
+        redirect: "follow",
+    };
+    const countryIso = this.selectedOptions[0].getAttribute("data-iso2");
+    let fetchCountriesURL = `https://api.countrystatecity.in/v1/countries/${countryIso}`;
+
+    fetch(fetchCountriesURL, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+            console.log(result);
+        })
+        .catch((error) => console.log("error", error));
+}
 
 // handle dropdown choice
 // call flag api
-function fetchFlag() {
+function fetchFlag(event) {
+    event.preventDefault();
+    console.log(event);
     // TODO: use variable in this url to make
-    let fetchFlagsURL = "https://countryflagsapi.com/png/ad";
+    const countryIso = this.selectedOptions[0].getAttribute("data-iso2");
+    let fetchFlagsURL = `https://countryflagsapi.com/png/${countryIso}`;
 
     fetch(fetchFlagsURL)
         .then((response) => response.blob())
         .then((result) => {
             console.log(result);
             let flagURL = URL.createObjectURL(result);
-            document.getElementById("showFlag").innerHTML = `<img src="${flagURL}" >`;
+            document.getElementById("showFlag").innerHTML = `<img class="helloFlag" src="${flagURL}" >`;
         })
         .catch((error) => console.log("error", error));
 }
@@ -70,5 +93,6 @@ function fetchCurrencyRates() {
 // ping country API to populate dropdown
 fetchCountries();
 // country select from dropdown
-fetchFlag();
 fetchCurrencyRates();
+selectBar.addEventListener("change", fetchFlag);
+selectBar.addEventListener("change", fetchChosenCountryData);
