@@ -51,6 +51,7 @@ function fetchChosenCountryData() {
         .then((response) => response.json())
         .then((result) => {
             console.log(result);
+            fetchCurrencyRates(result);
         })
         .catch((error) => console.log("error", error));
 }
@@ -75,14 +76,16 @@ function fetchFlag(event) {
 }
 
 // call currency api
-function fetchCurrencyRates() {
+function fetchCurrencyRates(countryData) {
     let fetchRatesURL = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/btc.json";
+    let currency = countryData.currency;
 
     fetch(fetchRatesURL)
         .then((response) => response.json())
         .then((result) => {
             console.log(result);
-            document.getElementById("showCrypto").innerHTML = `<div>ADA to BTC: ${result.btc.ada}</div>`;
+            console.log("currency", currency);
+            document.getElementById("showCrypto").innerHTML = `<div>${result.btc[currency.toLowerCase()]} ${currency} = 1 BTC</div>`;
         })
         .catch((error) => console.log("error", error));
 }
@@ -93,6 +96,5 @@ function fetchCurrencyRates() {
 // ping country API to populate dropdown
 fetchCountries();
 // country select from dropdown
-fetchCurrencyRates();
 selectBar.addEventListener("change", fetchFlag);
 selectBar.addEventListener("change", fetchChosenCountryData);
