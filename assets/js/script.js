@@ -5,22 +5,26 @@ let selectBar = document.querySelector("#country-select");
 // FUNCTIONS
 // country api call
 function fetchCountries() {
+    // Fetching Country URL
+    let fetchCountriesURL = "https://api.countrystatecity.in/v1/countries";
+    // create API header
     let validate = new Headers();
     validate.append("X-CSCAPI-KEY", "UFVhZmZRcFNQM3luREtqTUhOS0lCMXVNOUQ2UHZ2R01VakNqZ3RtcA==");
-
     let requestOptions = {
         method: "GET",
         headers: validate,
         redirect: "follow",
     };
 
-    let fetchCountriesURL = "https://api.countrystatecity.in/v1/countries";
-
+    // actually fetching data from variables in function
     fetch(fetchCountriesURL, requestOptions)
+        //JSON parses response
         .then((response) => response.json())
-        .then((result) => {
-            console.log(result);
-            result.forEach((country) => {
+        // Return JSON response CREAM FILLING
+        .then((countries) => {
+            console.log(countries);
+            // adds value to options
+            countries.forEach((country) => {
                 let countryRow = document.createElement("option");
                 // give attributes for countries
                 countryRow.setAttribute("data-iso2", country.iso2);
@@ -31,20 +35,22 @@ function fetchCountries() {
                 selectBar.appendChild(countryRow);
             });
         })
+        // if nothing is pulled, error is displayed
         .catch((error) => console.log("error", error));
 }
 
 // populate dropdown with country specific api info
-function fetchChosenCountryData() {
+function fetchChosenCountryData(countryIso) {
     let validate = new Headers();
     validate.append("X-CSCAPI-KEY", "UFVhZmZRcFNQM3luREtqTUhOS0lCMXVNOUQ2UHZ2R01VakNqZ3RtcA==");
-
+    // allows user to utilize API and checks if it works
     let requestOptions = {
         method: "GET",
         headers: validate,
         redirect: "follow",
     };
-    const countryIso = this.selectedOptions[0].getAttribute("data-iso2");
+    // Pulls selected data attribute from specific API Array
+    // temperate literal grabbing
     let fetchCountriesURL = `https://api.countrystatecity.in/v1/countries/${countryIso}`;
 
     fetch(fetchCountriesURL, requestOptions)
@@ -58,16 +64,19 @@ function fetchChosenCountryData() {
 
 // handle dropdown choice
 // call flag api
-function fetchFlag(event) {
-    event.preventDefault();
-    console.log(event);
-    // TODO: use variable in this url to make
+function fetchFlag() {
+    document.getElementById("loadingMessage").innerHTML = `<div>loading</div>`;
+    document.getElementById("showFlag").innerHTML = "";
+    document.getElementById("showCrypto").innerHTML = "";
     const countryIso = this.selectedOptions[0].getAttribute("data-iso2");
+    fetchChosenCountryData(countryIso);
+    // TODO: use variable in this url to make
     let fetchFlagsURL = `https://countryflagsapi.com/png/${countryIso}`;
 
     fetch(fetchFlagsURL)
         .then((response) => response.blob())
         .then((result) => {
+            document.getElementById("loadingMessage").innerHTML = "";
             console.log(result);
             let flagURL = URL.createObjectURL(result);
             document.getElementById("showFlag").innerHTML = `<img class="helloFlag" src="${flagURL}" >`;
@@ -97,4 +106,3 @@ function fetchCurrencyRates(countryData) {
 fetchCountries();
 // country select from dropdown
 selectBar.addEventListener("change", fetchFlag);
-selectBar.addEventListener("change", fetchChosenCountryData);
