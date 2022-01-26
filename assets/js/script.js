@@ -39,6 +39,7 @@ function fetchCountries() {
         .catch((error) => console.log("error", error));
 }
 
+// handle dropdown choice
 // populate dropdown with country specific api info
 function fetchChosenCountryData(countryIso) {
     let validate = new Headers();
@@ -50,44 +51,38 @@ function fetchChosenCountryData(countryIso) {
         redirect: "follow",
     };
     // Pulls selected data attribute from specific API Array
-    // temperate literal grabbing
+    // template literal using country code to tell api which country data to pull
     let fetchCountriesURL = `https://api.countrystatecity.in/v1/countries/${countryIso}`;
 
     fetch(fetchCountriesURL, requestOptions)
         .then((response) => response.json())
         .then((result) => {
             console.log(result);
+            // sends result data to currency rate function
             fetchCurrencyRates(result);
         })
         .catch((error) => console.log("error", error));
 }
 
-// handle dropdown choice
 // call flag api
 function fetchFlag() {
-    //
+    // displays "loading" in between user choices
     document.getElementById("loadingMessage").innerHTML = `<div>loading</div>`;
-    //
-    document.getElementById("showFlag").innerHTML = "";
-    //
-    document.getElementById("showCrypto").innerHTML = "";
     // Telling countryIso to equal the selected option from the API array "data-iso2"
     const countryIso = this.selectedOptions[0].getAttribute("data-iso2");
     fetchChosenCountryData(countryIso);
-    // TODO: use variable in this url to make
-    let fetchFlagsURL = `https://countryflagsapi.com/png/${countryIso}`;
     //
+    let fetchFlagsURL = `https://countryflagsapi.com/png/${countryIso}`;
+
     fetch(fetchFlagsURL)
-        //
         .then((response) => response.blob())
-        //
         .then((result) => {
-            //
+            // dislpays a loading message while api is fetching flag data
             document.getElementById("loadingMessage").innerHTML = "";
-            //
             console.log(result);
+            // creates URL to be used as image element src attribute
             let flagURL = URL.createObjectURL(result);
-            //
+            // adds image to page
             document.getElementById("showFlag").innerHTML = `<img class="helloFlag" src="${flagURL}" >`;
         })
         // if nothing is pulled, error is displayed
@@ -101,19 +96,17 @@ function fetchCurrencyRates(countryData) {
     //
     fetch(fetchRatesURL)
         .then((response) => response.json())
-        //
         .then((result) => {
             console.log(result);
             console.log("currency", currency);
+            // adds text to div element describing currency relation to Bitcoin
             document.getElementById("showCrypto").innerHTML = `<div>${result.btc[currency.toLowerCase()]} ${currency} = 1 BTC</div>`;
         })
         .catch((error) => console.log("error", error));
 }
 
-// display flag and currency api info
-
 // EVENTS
-// ping country API to populate dropdown
+// initial ping of country API to populate dropdown
 fetchCountries();
 // country select from dropdown
 selectBar.addEventListener("change", fetchFlag);
