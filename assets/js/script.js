@@ -65,22 +65,32 @@ function fetchChosenCountryData(countryIso) {
 // handle dropdown choice
 // call flag api
 function fetchFlag() {
+    //
     document.getElementById("loadingMessage").innerHTML = `<div>loading</div>`;
+    //
     document.getElementById("showFlag").innerHTML = "";
+    //
     document.getElementById("showCrypto").innerHTML = "";
+    // Telling countryIso to equal the selected option from the API array "data-iso2"
     const countryIso = this.selectedOptions[0].getAttribute("data-iso2");
     fetchChosenCountryData(countryIso);
     // TODO: use variable in this url to make
     let fetchFlagsURL = `https://countryflagsapi.com/png/${countryIso}`;
-
+    //
     fetch(fetchFlagsURL)
+        //
         .then((response) => response.blob())
+        //
         .then((result) => {
+            //
             document.getElementById("loadingMessage").innerHTML = "";
+            //
             console.log(result);
             let flagURL = URL.createObjectURL(result);
+            //
             document.getElementById("showFlag").innerHTML = `<img class="helloFlag" src="${flagURL}" >`;
         })
+        // if nothing is pulled, error is displayed
         .catch((error) => console.log("error", error));
 }
 
@@ -88,9 +98,10 @@ function fetchFlag() {
 function fetchCurrencyRates(countryData) {
     let fetchRatesURL = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/btc.json";
     let currency = countryData.currency;
-
+    //
     fetch(fetchRatesURL)
         .then((response) => response.json())
+        //
         .then((result) => {
             console.log(result);
             console.log("currency", currency);
