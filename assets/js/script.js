@@ -1,9 +1,11 @@
 // VARIABLES
 let selectForm = document.querySelector("#countryForm");
 let selectBar = document.querySelector("#country-select");
+let recentSearchInit = localStorage.getItem("lastChosen");
 
 // FUNCTIONS
 // country api call
+// https://countrystatecity.in/docs/api/country/
 function fetchCountries() {
     // Fetching Country URL
     let fetchCountriesURL = "https://api.countrystatecity.in/v1/countries";
@@ -59,12 +61,14 @@ function fetchChosenCountryData(countryIso) {
         .then((result) => {
             console.log(result);
             // sends result data to currency rate function
+            sendLocalStorage(result.name);
             fetchCurrencyRates(result);
         })
         .catch((error) => console.log("error", error));
 }
 
 // call flag api
+// https://www.countryflagsapi.com/#howToUse
 function fetchFlag() {
     // displays "loading" in between user choices
     document.getElementById("loadingMessage").innerHTML = `<div>loading</div>`;
@@ -90,6 +94,7 @@ function fetchFlag() {
 }
 
 // call currency api
+// https://github.com/fawazahmed0/currency-api
 function fetchCurrencyRates(countryData) {
     let fetchRatesURL = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/btc.json";
     let currency = countryData.currency;
@@ -105,8 +110,15 @@ function fetchCurrencyRates(countryData) {
         .catch((error) => console.log("error", error));
 }
 
+function sendLocalStorage(countryName) {
+    let recentCountry = localStorage.getItem("lastChosen");
+    document.getElementById("lastChosenCountry").innerHTML = recentCountry;
+    localStorage.setItem("lastChosen", countryName);
+}
+
 // EVENTS
 // initial ping of country API to populate dropdown
 fetchCountries();
+document.getElementById("lastChosenCountry").innerHTML = recentSearchInit;
 // country select from dropdown
 selectBar.addEventListener("change", fetchFlag);
