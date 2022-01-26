@@ -7,53 +7,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.3.0/dist/flowbite.min.css" />
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
-<body>
-    <!-- TODO: HEADER -->
-    <header>
-        <!-- title -->
-        <h1>Money Flagz</h1>
-        <!-- logo -->
+<body class="flex flex-col h-screen">
+    <!-- Header -->
+    <header class="bg-orange-400 flex items-center p-4">
         <div>
+            <!-- title -->
+            <h1>Money Flagz</h1>
+            <!-- logo -->
             <img src="./assets/images/globe_logo.png" alt="">
         </div>
         <!-- how to use -->
-        <p>Please select a country, and we will tell you about it!</p>
-        <div>Last Country Searched:
-            <p id="lastChosenCountry"></p>
-        </div>
+        <p class="pl-4">Please select a country, and we will tell you about it!</p>
     </header>
 
-    <main>
-        <!-- todo: dropdown of 5 countries with ISO2 code values -->
-        <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/option -->
-        <!-- <form id="countryForm" action=""> -->
-        <select id="country-select">
-            <option value="">--Please choose an option--</option>
-        </select>
-        <!-- <input type="submit"> -->
-        <!-- </form> -->
+    <!-- content area -->
+    <main class="flex flex-grow">
+        <section class="flex flex-col grow content-center p-4">
+            <!-- label for dropdown -->
+            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select Your
+                Country:</label>
+            <!-- dropdown bar -->
+            <select id="country-select"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-auto p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <!-- placeholder option for dropdown, set to disappear when dropdown activates -->
+                <option value="" disabled selected hidden>--Please choose an option--</option>
+            </select>
 
-        <section>
-            <!-- TODO: COMPARISON AREA -->
-            <!-- display chosen country flag & currency value -->
-            <div id="loadingMessage"></div>
-            <div id="showFlag">
-
-            </div>
-            <!-- bitcoin -->
-            <div id="showCrypto"></div>
+            <!-- display area for country info -->
+            <section>
+                <!-- display chosen country flag -->
+                <div class="p-4" id="loadingMessage"></div>
+                <div class="p-4" id="showFlag"></div>
+                <!-- conversion to bitcoin -->
+                <div class="p-4">Conversion to Bitcoin:
+                    <div id="showCrypto"></div>
+                </div>
+            </section>
         </section>
+
+        <!-- aside for search history -->
+        <aside class="p-4">
+            <div>Search History:</div>
+            <!-- container div for history items -->
+            <div class="flex flex-col-reverse" id="lastChosenCountry"></div>
+        </aside>
     </main>
+
     <!-- FOOTER -->
-    <footer>
-        <!-- team name, contact info -->
+    <footer class="flex flex-col items-center p-4">
+        <!-- team name, members -->
         <h3>We are Team WYSIWYG</h3>
         <p>Aidan Chamberlain, Jon Chirinos, Maya Tillman</p>
     </footer>
 
+    <script src="https://unpkg.com/@themesberg/flowbite@1.3.0/dist/flowbite.bundle.js"></script>
     <script src="assets/js/script.js"></script>
 </body>
 
