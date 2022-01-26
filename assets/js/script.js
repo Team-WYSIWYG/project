@@ -1,7 +1,6 @@
 // VARIABLES
 let selectForm = document.querySelector("#countryForm");
 let selectBar = document.querySelector("#country-select");
-let recentSearchInit = localStorage.getItem("lastChosen");
 
 // FUNCTIONS
 // country api call
@@ -12,6 +11,7 @@ function fetchCountries() {
     // create API header
     let validate = new Headers();
     validate.append("X-CSCAPI-KEY", "UFVhZmZRcFNQM3luREtqTUhOS0lCMXVNOUQ2UHZ2R01VakNqZ3RtcA==");
+
     let requestOptions = {
         method: "GET",
         headers: validate,
@@ -46,12 +46,13 @@ function fetchCountries() {
 function fetchChosenCountryData(countryIso) {
     let validate = new Headers();
     validate.append("X-CSCAPI-KEY", "UFVhZmZRcFNQM3luREtqTUhOS0lCMXVNOUQ2UHZ2R01VakNqZ3RtcA==");
-    // allows user to utilize API and checks if it works
+    // sets method to GET, checks if user has valid key, redirects to API url if valid
     let requestOptions = {
         method: "GET",
         headers: validate,
         redirect: "follow",
     };
+
     // Pulls selected data attribute from specific API Array
     // template literal using country code to tell api which country data to pull
     let fetchCountriesURL = `https://api.countrystatecity.in/v1/countries/${countryIso}`;
@@ -60,8 +61,9 @@ function fetchChosenCountryData(countryIso) {
         .then((response) => response.json())
         .then((result) => {
             console.log(result);
+            // add item to search history
+            document.getElementById("lastChosenCountry").innerHTML += `<div data-country="US"> ${result.name}</div>`;
             // sends result data to currency rate function
-            sendLocalStorage(result.name);
             fetchCurrencyRates(result);
         })
         .catch((error) => console.log("error", error));
@@ -75,7 +77,7 @@ function fetchFlag() {
     // Telling countryIso to equal the selected option from the API array "data-iso2"
     const countryIso = this.selectedOptions[0].getAttribute("data-iso2");
     fetchChosenCountryData(countryIso);
-    //
+    // template literal using country iso code to tell api which flag to get
     let fetchFlagsURL = `https://countryflagsapi.com/png/${countryIso}`;
 
     fetch(fetchFlagsURL)
@@ -96,9 +98,11 @@ function fetchFlag() {
 // call currency api
 // https://github.com/fawazahmed0/currency-api
 function fetchCurrencyRates(countryData) {
+    // url location of currency exchange data
     let fetchRatesURL = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/btc.json";
+    // currency is assigned to "currency" key of countryData passed into function
     let currency = countryData.currency;
-    //
+
     fetch(fetchRatesURL)
         .then((response) => response.json())
         .then((result) => {
@@ -110,15 +114,8 @@ function fetchCurrencyRates(countryData) {
         .catch((error) => console.log("error", error));
 }
 
-function sendLocalStorage(countryName) {
-    let recentCountry = localStorage.getItem("lastChosen");
-    document.getElementById("lastChosenCountry").innerHTML = recentCountry;
-    localStorage.setItem("lastChosen", countryName);
-}
-
 // EVENTS
 // initial ping of country API to populate dropdown
 fetchCountries();
-document.getElementById("lastChosenCountry").innerHTML = recentSearchInit;
 // country select from dropdown
 selectBar.addEventListener("change", fetchFlag);
