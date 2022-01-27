@@ -6,27 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="icon" href="./assets/images/planet-earth.png" <script src="https://cdn.tailwindcss.com">
-    </script>
+    <link rel="icon" href="./assets/images/planet-earth.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.3.0/dist/flowbite.min.css" />
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body class="flex flex-col h-screen">
     <!-- Header -->
-    <header class="bg-orange-400 flex items-center p-4">
-        <div>
-            <!-- title -->
-            <h1>Money Flagz</h1>
+    <header class="bg-orange-400 border-black border-b-2 flex items-center p-4">
+        <div class="flex items-center">
             <!-- logo -->
-            <img src="./assets/images/globe_logo.png" alt="">
+            <img class="rounded-2xl" src="./assets/images/globe_logo.png" alt="a logo of a classic tabletop globe">
+            <!-- title -->
+            <h1 class="font-bold p-4 text-4xl">Money Flagz</h1>
         </div>
         <!-- how to use -->
-        <p class="pl-4">Please select a country, and we will tell you about it!</p>
+        <p class="italic pl-4">Please select a country, and we will tell you a little about your choice!</p>
     </header>
 
     <!-- content area -->
-    <main class="flex flex-grow">
+    <main class="bg-gradient-to-b from-orange-400 to-orange-200 flex flex-grow">
         <section class="flex flex-col grow content-center p-4">
             <!-- label for dropdown -->
             <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select Your
@@ -41,17 +41,35 @@
             <!-- display area for country info -->
             <section>
                 <!-- display chosen country flag -->
-                <div class="p-4" id="loadingMessage"></div>
-                <div class="p-4" id="showFlag"></div>
+                <div class="px-4 py-2" id="loadingMessage"></div>
+                <div class="px-4 py-2" id="showFlag"></div>
+                <!-- display for ISO2 code -->
+                <div class="font-bold px-4 py-2">ISO2 Code:
+                    <div class="font-normal" id="showIso2Code"></div>
+                </div>
+                <!-- display for capital city name -->
+                <div class="font-bold px-4 py-2">Capital City:
+                    <div class="font-normal" id="showCapital"></div>
+                </div>
+                <!-- display for country endonym -->
+                <div class="font-bold px-4 py-2">Country Endonym:
+                    <div class="font-normal" id="showEndonym"></div>
+                </div>
+                <!-- display for local currency information -->
+                <div class="font-bold px-4 py-2">Local Currency Info:
+                    <div class="font-normal" id="showCurrencyCode"></div>
+                    <div class="font-normal" id="showCurrencyName"></div>
+                    <div class="font-normal" id="showCurrencySymbol"></div>
+                </div>
                 <!-- conversion to bitcoin -->
-                <div class="p-4">Conversion to Bitcoin:
-                    <div id="showCrypto"></div>
+                <div class="font-bold px-4 py-2">Local Currency Conversion to Bitcoin:
+                    <div class="font-normal" id="showCrypto"></div>
                 </div>
             </section>
         </section>
 
         <!-- aside for search history -->
-        <aside class="p-4">
+        <aside class="border-black border-l-2 p-4">
             <div>Search History:</div>
             <!-- container div for history items -->
             <div class="flex flex-col-reverse" id="lastChosenCountry"></div>
@@ -59,9 +77,9 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="flex flex-col items-center p-4">
+    <footer class="bg-orange-200 border-black border-t-2 flex flex-col items-center p-4">
         <!-- team name, members -->
-        <h3>We are Team WYSIWYG</h3>
+        <h3 class="font-bold p-4 text-2xl">We are Team WYSIWYG</h3>
         <p>Aidan Chamberlain, Jon Chirinos, Maya Tillman</p>
     </footer>
 

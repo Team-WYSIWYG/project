@@ -64,7 +64,7 @@ function fetchChosenCountryData(countryIso) {
             // add item to search history
             document.getElementById("lastChosenCountry").innerHTML += `<div data-country="US"> ${result.name}</div>`;
             // sends result data to currency rate function
-            fetchCurrencyRates(result);
+            populateCountryData(result);
         })
         .catch((error) => console.log("error", error));
 }
@@ -89,7 +89,7 @@ function fetchFlag() {
             // creates URL to be used as image element src attribute
             let flagURL = URL.createObjectURL(result);
             // adds image to page
-            document.getElementById("showFlag").innerHTML = `<img class="helloFlag" src="${flagURL}" >`;
+            document.getElementById("showFlag").innerHTML = `<img class="border-4 rounded" src="${flagURL}" >`;
         })
         // if nothing is pulled, error is displayed
         .catch((error) => console.log("error", error));
@@ -97,19 +97,30 @@ function fetchFlag() {
 
 // call currency api
 // https://github.com/fawazahmed0/currency-api
-function fetchCurrencyRates(countryData) {
+function populateCountryData(countryData) {
     // url location of currency exchange data
     let fetchRatesURL = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/btc.json";
-    // currency is assigned to "currency" key of countryData passed into function
+    // assignment of variables to fetched data keys
+    let countryCode = countryData.iso2;
+    let capitalCity = countryData.capital;
+    let endonym = countryData.native;
+    let currencyName = countryData.currency_name;
+    let currencySymbol = countryData.currency_symbol;
     let currency = countryData.currency;
 
     fetch(fetchRatesURL)
         .then((response) => response.json())
         .then((result) => {
             console.log(result);
-            console.log("currency", currency);
-            // adds text to div element describing currency relation to Bitcoin
-            document.getElementById("showCrypto").innerHTML = `<div>${result.btc[currency.toLowerCase()]} ${currency} = 1 BTC</div>`;
+            console.log(countryData.currency_name);
+            // following lines all populate specified divs with country information
+            document.getElementById("showIso2Code").innerHTML = countryCode;
+            document.getElementById("showCapital").innerHTML = capitalCity;
+            document.getElementById("showEndonym").innerHTML = endonym;
+            document.getElementById("showCurrencyCode").innerHTML = `Code: ${currency}`;
+            document.getElementById("showCurrencyName").innerHTML = `Name: ${currencyName}`;
+            document.getElementById("showCurrencySymbol").innerHTML = `Symbol: ${currencySymbol}`;
+            document.getElementById("showCrypto").innerHTML = `${result.btc[currency.toLowerCase()]} ${currency} = 1 BTC`;
         })
         .catch((error) => console.log("error", error));
 }
