@@ -1,4 +1,4 @@
-// VARIABLES
+// GLOBAL VARIABLES
 let selectForm = document.querySelector("#countryForm");
 let selectBar = document.querySelector("#country-select");
 let countryInit = "US";
@@ -62,7 +62,9 @@ function fetchChosenCountryData(countryIso) {
         .then((result) => {
             // add item to search history
             document.getElementById("lastChosenCountry").innerHTML += `<div data-country="US"> ${result.name}</div>`;
+            // assigns variable to the number of children of the search history div
             let numb = document.getElementById("lastChosenCountry").childElementCount;
+            // if statement covering max number of countries in history
             if (numb > 3) {
                 // remove child of lastchosencountry at child index of 0
                 let searchHistory = document.getElementById("lastChosenCountry");
@@ -102,7 +104,6 @@ function fetchFlag() {
 function fetchUSA_Flag() {
     // displays "loading" in between user choices
     document.getElementById("loadingMessage").innerHTML = `<div>loading</div>`;
-    // Telling countryIso to equal the selected option from the API array "data-iso2"
     // template literal using country iso code to tell api which flag to get
     let fetchUSA_URL = `https://countryflagsapi.com/png/US`;
 
@@ -166,6 +167,8 @@ function populateCountryData(countryData) {
             document.getElementById("showCurrencyCode").innerHTML = `Code: ${currency}`;
             document.getElementById("showCurrencyName").innerHTML = `Name: ${currencyName}`;
             document.getElementById("showCurrencySymbol").innerHTML = `Symbol: ${currencySymbol}`;
+            // antarctica has undefined currency exchange information, show special message if chosen
+            // else display exchange info
             if (countryCode === "AQ") {
                 document.getElementById("showCrypto").innerHTML = `1.7 Waddles of Penguins = 1 BTC`;
             } else {
@@ -178,7 +181,9 @@ function populateCountryData(countryData) {
 // EVENTS
 // initial ping of country API to populate dropdown
 fetchCountries();
+// initial ping to flag API to start the page on USA
 fetchUSA_Flag();
+// initial ping to country API to start the page on USA
 fetchUSA_Data();
-// country select from dropdown
+// country select event listener from dropdown
 selectBar.addEventListener("change", fetchFlag);
