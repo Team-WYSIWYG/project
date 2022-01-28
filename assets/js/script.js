@@ -166,7 +166,11 @@ function populateCountryData(countryData) {
             document.getElementById("showCurrencyCode").innerHTML = `Code: ${currency}`;
             document.getElementById("showCurrencyName").innerHTML = `Name: ${currencyName}`;
             document.getElementById("showCurrencySymbol").innerHTML = `Symbol: ${currencySymbol}`;
-            document.getElementById("showCrypto").innerHTML = `${result.btc[currency.toLowerCase()]} ${currency} = 1 BTC`;
+            if (countryCode === "AQ") {
+                document.getElementById("showCrypto").innerHTML = `1.7 Waddles of Penguins = 1 BTC`;
+            } else {
+                document.getElementById("showCrypto").innerHTML = `${result.btc[currency.toLowerCase()]} ${currency} = 1 BTC`;
+            }
         })
         .catch((error) => console.log("error", error));
 }
