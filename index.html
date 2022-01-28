@@ -45,40 +45,46 @@
             </select>
 
             <!-- display area for country info -->
-            <section>
-                <!-- display chosen country flag -->
-                <div class="px-4 py-2" id="loadingMessage"></div>
-                <div class="px-4 py-2" id="showFlag"></div>
-                <!-- display for ISO2 code -->
-                <div class="font-bold px-4 py-2">ISO2 Code:
-                    <div class="font-normal" id="showIso2Code"></div>
+            <section class="flex items-center text-center">
+                <div class="m-auto">
+                    <!-- display chosen country flag -->
+                    <div class="px-4 py-2" id="loadingMessage"></div>
+                    <div class="px-4 py-2" id="showFlag"></div>
                 </div>
-                <!-- display for capital city name -->
-                <div class="font-bold px-4 py-2">Capital City:
-                    <div class="font-normal" id="showCapital"></div>
-                </div>
-                <!-- display for country endonym -->
-                <div class="font-bold px-4 py-2">Country Endonym:
-                    <div class="font-normal" id="showEndonym"></div>
-                </div>
-                <!-- display for local currency information -->
-                <div class="font-bold px-4 py-2">Local Currency Info:
-                    <div class="font-normal" id="showCurrencyCode"></div>
-                    <div class="font-normal" id="showCurrencyName"></div>
-                    <div class="font-normal" id="showCurrencySymbol"></div>
-                </div>
-                <!-- conversion to bitcoin -->
-                <div class="font-bold px-4 py-2">Local Currency Conversion to Bitcoin:
-                    <div class="font-normal" id="showCrypto"></div>
+                <div class="m-auto">
+                    <!-- display for ISO2 code -->
+                    <div class="font-bold px-4 py-2">ISO2 Code:
+                        <div class="font-normal" id="showIso2Code"></div>
+                    </div>
+                    <!-- display for capital city name -->
+                    <div class="font-bold px-4 py-2">Capital City:
+                        <div class="font-normal" id="showCapital"></div>
+                    </div>
+                    <!-- display for country endonym -->
+                    <div class="font-bold px-4 py-2">Country Endonym:
+                        <div class="font-normal" id="showEndonym"></div>
+                    </div>
+                    <!-- display for local currency information -->
+                    <div class="font-bold px-4 py-2">Local Currency Info:
+                        <div class="font-normal" id="showCurrencyCode"></div>
+                        <div class="font-normal" id="showCurrencyName"></div>
+                        <div class="font-normal" id="showCurrencySymbol"></div>
+                    </div>
+                    <!-- conversion to bitcoin -->
+                    <div class="font-bold px-4 py-2">Local Currency Conversion to Bitcoin:
+                        <div class="font-normal" id="showCrypto"></div>
+                    </div>
                 </div>
             </section>
         </section>
 
         <!-- aside for search history -->
         <aside class="border-black border-l-2 p-4">
-            <div>Search History:</div>
-            <!-- container div for history items -->
-            <div class="flex flex-col-reverse" id="lastChosenCountry"></div>
+            <div>
+                <div>Search History:</div>
+                <!-- container div for history items -->
+                <div class="flex flex-col-reverse" id="lastChosenCountry"></div>
+            </div>
         </aside>
     </main>
 
