@@ -1,5 +1,4 @@
 // GLOBAL VARIABLES
-let selectForm = document.querySelector("#countryForm");
 let selectBar = document.querySelector("#country-select");
 let countryInit = "US";
 
